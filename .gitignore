@@ -1,0 +1,19 @@
+# Supabase CLI local state — contains project metadata, not for the repo
+supabase/.temp/
+supabase/.branches/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.vscode/
+.idea/
+
+# Claude Code worktrees
+.claude/
