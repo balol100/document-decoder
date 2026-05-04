@@ -744,10 +744,10 @@
           </button>
         </div>
         <input type="file" id="cameraInput" class="hidden" accept="image/*" capture="environment">
-        <input type="file" id="fileInput" class="hidden" accept="image/*,application/pdf">
+        <input type="file" id="fileInput" class="hidden" accept="image/*">
 
         <div class="upload-hint">
-          <div><span class="formats">קבצים נתמכים:</span> תמונה (JPG, PNG, HEIC) או PDF — עד 10MB</div>
+          <div><span class="formats">קבצים נתמכים:</span> תמונה (JPG, PNG, HEIC) — עד 10MB</div>
           <div style="margin-top:6px">🔒 ללא הרשמה · ללא חשבון · ללא מעקב</div>
         </div>
 
@@ -787,9 +787,32 @@
 
     </main>
 
-    <footer>
-      <div class="credit">נבנה על ידי Claude ו-<a href="https://lior-ai.com" target="_blank" rel="noopener noreferrer">lior_Ai</a></div>
-      <div>כי כל אדם צריך להבין מה כתוב לו <span class="heart">❤️</span></div>
+    <footer style="background: #1e293b; color: #94a3b8; padding: 2.5rem 1.5rem; text-align: center; margin-top: 3rem; border-radius: 24px 24px 0 0;">
+      <div style="max-width: 800px; margin: 0 auto;">
+        <div style="font-size: 1.5rem; font-weight: 800; color: #f8fafc; margin-bottom: 0.5rem;">LIOR-AI</div>
+        <div style="font-size: 0.95rem; margin-bottom: 1.5rem;">כלים חינמיים מבוססי AI לישראלים</div>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; font-size: 0.9rem;">
+          <a href="https://lior-ai.com" style="color: #60a5fa; text-decoration: none;">🏠 דף הבית</a>
+          <span style="opacity: 0.3;">|</span>
+          <a href="https://lior-ai.com/accessibility" style="color: #60a5fa; text-decoration: none;">♿ הצהרת נגישות</a>
+          <span style="opacity: 0.3;">|</span>
+          <a href="https://lior-ai.com/privacy" style="color: #60a5fa; text-decoration: none;">מדיניות פרטיות</a>
+          <span style="opacity: 0.3;">|</span>
+          <a href="https://lior-ai.com/terms" style="color: #60a5fa; text-decoration: none;">תנאי שימוש</a>
+          <span style="opacity: 0.3;">|</span>
+          <a href="https://wa.me/972523122016" style="color: #60a5fa; text-decoration: none;">📱 יצירת קשר</a>
+        </div>
+        <div style="font-size: 0.85rem; margin-bottom: 1rem; color: #64748b;">כלים נוספים מבית LIOR-AI:</div>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-bottom: 1.5rem; font-size: 0.9rem;">
+          <a href="https://car.lior-ai.com" style="color: #94a3b8; text-decoration: none;">🚗 רכב</a>
+          <a href="https://law.lior-ai.com" style="color: #94a3b8; text-decoration: none;">⚖️ משפט</a>
+          <a href="https://super.lior-ai.com" style="color: #94a3b8; text-decoration: none;">🛒 סופר</a>
+          <a href="https://convert.lior-ai.com" style="color: #94a3b8; text-decoration: none;">📐 המרות</a>
+          <a href="https://kaduregel-lior.netlify.app" style="color: #94a3b8; text-decoration: none;">⚽ FootPredict</a>
+        </div>
+        <div style="font-size: 0.8rem; color: #475569;">© 2026 LIOR-AI. כל הזכויות שמורות.</div>
+        <div style="font-size: 0.8rem; color: #475569; margin-top: 0.25rem;">נבנה על ידי Claude ו-lior_Ai — כי כל אדם צריך להבין מה כתוב לו</div>
+      </div>
     </footer>
   </div>
 
@@ -1079,6 +1102,39 @@ function renderResults(analysis){
   const deadlines = Array.isArray(analysis.deadlines) ? analysis.deadlines : [];
   const warnings = Array.isArray(analysis.warnings) ? analysis.warnings : [];
 
+  // Fallback: server couldn't parse the model's response into the structured
+  // schema, so we got the raw Hebrew text instead. Show it plainly — better
+  // than failing.
+  if(analysis.fallback === true){
+    let fhtml = `<div class="urgency-banner ub-low" role="status">
+      <span class="ub-icon" aria-hidden="true">📝</span>
+      <div><strong>הנה מה שהצלחתי לקרוא במסמך</strong> — לא הצלחתי לסדר את זה לכרטיסיות, אבל זה התוכן:</div>
+    </div>`;
+    fhtml += `<div class="summary-card">
+      <div class="card-label">📄 התוכן של המסמך</div>
+      <div class="summary-text" style="white-space: pre-wrap;">${esc(summary || 'לא היה תוכן להציג.')}</div>
+    </div>`;
+    fhtml += `<div class="results-actions">
+      <button class="btn-primary" id="gotItBtn">👍 הבנתי, תודה!</button>
+      <button class="btn-secondary btn-share-wa" id="shareWaBtn">💬 שתף את הכלי בוואטסאפ</button>
+    </div>`;
+    dynamicArea.innerHTML = `<div class="results">${fhtml}</div>`;
+    $('gotItBtn').addEventListener('click', ()=>{
+      dynamicArea.innerHTML = '';
+      uploadSection.style.display = '';
+      howItWorks.style.display = '';
+      privacyBadge.style.display = '';
+      cameraInput.value = '';
+      fileInput.value = '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    $('shareWaBtn').addEventListener('click', shareOnWhatsApp);
+    setTimeout(()=>{
+      dynamicArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+    return;
+  }
+
   let html = '';
 
   // Urgency banner
@@ -1216,9 +1272,8 @@ async function handleFile(file){
     return;
   }
   const isImage = /^image\//.test(file.type);
-  const isPdf = file.type === 'application/pdf';
-  if(!isImage && !isPdf){
-    showError('סוג קובץ לא נתמך', 'אפשר לטעון תמונה (JPG/PNG/HEIC) או קובץ PDF בלבד.', true);
+  if(!isImage){
+    showError('סוג קובץ לא נתמך', 'אפשר לטעון תמונה (JPG/PNG/HEIC) בלבד.', true);
     return;
   }
 

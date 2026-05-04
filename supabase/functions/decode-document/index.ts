@@ -154,6 +154,35 @@ const SYSTEM_PROMPT = `אתה מפענח מסמכים רשמיים בעברית.
 - "summary" חייב להיות תמיד מלא
 - אם המסמך לא קריא בכלל או לא נראה כמו מסמך — החזר documentType="other", sender="לא הצלחתי לזהות", summary שמסביר את הבעיה, ו-urgency="low"`;
 
+// Walk the text and return the substring of the first balanced {...} block,
+// honoring string literals so braces inside strings don't unbalance the count.
+// Greedy `.*` regex breaks when the model wraps JSON in prose that contains
+// stray braces; this scanner stops at the first true closing brace.
+function extractBalancedJson(text: string): string | null {
+  const start = text.indexOf("{");
+  if (start === -1) return null;
+
+  let depth = 0;
+  let inString = false;
+  let escape = false;
+  for (let i = start; i < text.length; i++) {
+    const c = text[i];
+    if (escape) { escape = false; continue; }
+    if (inString) {
+      if (c === "\\") escape = true;
+      else if (c === "\"") inString = false;
+      continue;
+    }
+    if (c === "\"") { inString = true; continue; }
+    if (c === "{") depth++;
+    else if (c === "}") {
+      depth--;
+      if (depth === 0) return text.slice(start, i + 1);
+    }
+  }
+  return null;
+}
+
 function safeParseJson(text: string): unknown | null {
   if (!text) return null;
   // Strip markdown code fences if Claude added them despite the system prompt.
@@ -161,17 +190,17 @@ function safeParseJson(text: string): unknown | null {
   try {
     return JSON.parse(stripped);
   } catch {
-    // Try to extract a JSON object from anywhere in the text.
-    const match = stripped.match(/\{[\s\S]*\}/);
-    if (match) {
-      try {
-        return JSON.parse(match[0]);
-      } catch {
-        return null;
-      }
-    }
-    return null;
+    // Intentionally fall through.
   }
+  const balanced = extractBalancedJson(stripped);
+  if (balanced) {
+    try {
+      return JSON.parse(balanced);
+    } catch {
+      // Intentionally fall through.
+    }
+  }
+  return null;
 }
 
 type Analysis = {
@@ -383,29 +412,49 @@ Deno.serve(async (req) => {
   const text = (textBlock?.text || "").trim();
 
   if (!text) {
-    return jsonResponse(
-      { error: "empty_response", message: "לא קיבלתי תשובה מה-AI. נסה תמונה ברורה יותר." },
-      502, origin,
-    );
+    const message = sourceType === "document"
+      ? "לא הצלחתי לקרוא את ה-PDF. נסה/י לצלם את המסמך במצלמה — לרוב זה עובד יותר טוב."
+      : "לא קיבלתי תשובה מה-AI. נסה/י תמונה ברורה יותר.";
+    return jsonResponse({ error: "empty_response", message }, 502, origin);
   }
 
   const parsed = safeParseJson(text);
   if (!parsed || typeof parsed !== "object") {
-    // We deliberately do NOT log `text` — it may contain extracted document content.
-    console.error("[decode-document] failed to parse JSON from model");
-    return jsonResponse(
-      { error: "parse_failed", message: "לא הצלחתי לפענח את התשובה. נסה תמונה ברורה יותר של המסמך." },
-      502, origin,
-    );
+    // Log structural diagnostics only — never the text itself, which may contain
+    // extracted document content (PII).
+    console.error("[decode-document] parse_failed " + JSON.stringify({
+      source_type: sourceType,
+      media_type: mt,
+      text_length: text.length,
+      open_braces: (text.match(/\{/g) || []).length,
+      close_braces: (text.match(/\}/g) || []).length,
+      starts_with_brace: text.startsWith("{"),
+      ends_with_brace: text.endsWith("}"),
+      has_code_fence: text.includes("```"),
+    }));
+
+    // Plain-text fallback: rather than show an error, hand the user the model's
+    // raw Hebrew so they at least see *something* useful. Frontend keys off
+    // `fallback: true` to render this without the structured cards.
+    return jsonResponse({
+      fallback: true,
+      documentType: "other",
+      sender: sourceType === "document" ? "מסמך PDF" : "מסמך",
+      summary: text.slice(0, 5000),
+      actionItems: [],
+      deadlines: [],
+      warnings: [],
+      urgency: "low",
+    }, 200, origin);
   }
 
   const analysis = normalizeAnalysis(parsed as Record<string, unknown>);
 
   if (!analysis.summary) {
-    return jsonResponse(
-      { error: "no_summary", message: "לא הצלחתי לקרוא את המסמך. נסה תמונה ברורה יותר של המסמך כולו." },
-      502, origin,
-    );
+    const message = sourceType === "document"
+      ? "לא הצלחתי לקרוא את ה-PDF. נסה/י לצלם את המסמך במצלמה במקום."
+      : "לא הצלחתי לקרוא את המסמך. נסה תמונה ברורה יותר של המסמך כולו.";
+    return jsonResponse({ error: "no_summary", message }, 502, origin);
   }
 
   return jsonResponse(analysis, 200, origin);
