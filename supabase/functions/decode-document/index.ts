@@ -38,7 +38,7 @@ const ANTHROPIC_API_KEY = Deno.env.get("ANTHROPIC_API_KEY") || "";
 const ANTHROPIC_MODEL = Deno.env.get("ANTHROPIC_MODEL") || "claude-haiku-4-5-20251001";
 
 const ALLOWED_ORIGINS = (Deno.env.get("ALLOWED_ORIGINS") ||
-  "https://decoder.lior-ai.com,https://document-decoder.netlify.app,https://document-decoder.lior-ai.com,http://localhost,http://localhost:3000,http://localhost:5173,http://localhost:8000")
+  "https://decoder.lior-ai.com,https://decoder-lior-ai.netlify.app,https://document-decoder.netlify.app,https://document-decoder.lior-ai.com,http://localhost,http://localhost:3000,http://localhost:5173,http://localhost:8000")
   .split(",").map((s) => s.trim()).filter(Boolean);
 
 // Daily rate limit per IP. Documents use more tokens than license-plate OCR.
