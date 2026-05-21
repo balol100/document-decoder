@@ -13,17 +13,17 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.supabase.co blob: data:; worker-src 'self' blob:; manifest-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>מפענח מסמכים — הסבר פשוט בעברית למסמכים רשמיים | חינם</title>
-<meta name="description" content="צלם מסמך רשמי — מכתב מהבנק, הביטוח, המדינה, העירייה — וקבל הסבר פשוט בעברית מה כתוב, מה לעשות ועד מתי. כלי AI חינמי לכל אדם בישראל.">
-<meta name="keywords" content="פענוח מסמכים, הסבר מסמך רשמי, מכתב מהבנק, מכתב מביטוח לאומי, התראת מס הכנסה, מכתב משפטי, מכתב עירייה, הבנת מסמך, AI עברית, סייע מסמכים, צילום מסמך, OCR עברית, מפענח מסמכים, מכתב חוב, התראה לפני הליכים">
+<title>מפענח מסמכים — AI שקורא ומסביר מסמכים בעברית | lior_Ai</title>
+<meta name="description" content="פענוח מסמכים בעברית בחינם — AI לקריאת מסמכים שמסביר PDF, תמונה או מכתב רשמי בשפה פשוטה. חלופה ל-chatpdf בעברית: בלי הרשמה, בלי הגבלה, ניתוח PDF בעברית מקורית.">
+<meta name="keywords" content="פענוח מסמכים, AI לקריאת מסמכים, ניתוח PDF בעברית, chatpdf בעברית, הסבר מסמך רשמי, מכתב מהבנק, מכתב מביטוח לאומי, התראת מס הכנסה, מכתב משפטי, מכתב עירייה, הבנת מסמך, AI עברית, סייע מסמכים, צילום מסמך, OCR עברית, מפענח מסמכים, מכתב חוב, התראה לפני הליכים, סיכום PDF בעברית, צ'אט עם PDF">
 <meta name="author" content="lior_Ai & Claude">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta http-equiv="content-language" content="he-IL">
 <meta name="theme-color" content="#5B7FB8">
 
 <!-- Open Graph -->
-<meta property="og:title" content="מפענח מסמכים — הסבר פשוט בעברית">
-<meta property="og:description" content="לא הבנת מכתב מהבנק, הביטוח או המדינה? צלם אותו, ואני אסביר לך בעברית פשוטה מה כתוב, מה לעשות ועד מתי. חינם.">
+<meta property="og:title" content="מפענח מסמכים — AI שקורא ומסביר מסמכים בעברית | lior_Ai">
+<meta property="og:description" content="פענוח מסמכים בעברית בחינם — AI לקריאת מסמכים שמסביר PDF, תמונה או מכתב רשמי בשפה פשוטה. חלופה ל-chatpdf בעברית: בלי הרשמה, בלי הגבלה.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://decoder.lior-ai.com">
 <meta property="og:locale" content="he_IL">
@@ -32,8 +32,8 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="מפענח מסמכים — הסבר פשוט בעברית">
-<meta name="twitter:description" content="צלם כל מסמך רשמי וקבל הסבר פשוט בעברית. חינם.">
+<meta name="twitter:title" content="מפענח מסמכים — AI שקורא ומסביר מסמכים בעברית | lior_Ai">
+<meta name="twitter:description" content="פענוח מסמכים בעברית בחינם — ניתוח PDF בעברית מקורית, בלי הרשמה, בלי הגבלה. חלופה ל-chatpdf בעברית.">
 
 <link rel="canonical" href="https://decoder.lior-ai.com">
 
@@ -47,15 +47,28 @@
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "מפענח מסמכים",
-  "alternateName": "Document Decoder",
+  "alternateName": ["Document Decoder", "chatpdf בעברית", "מפענח PDF בעברית"],
   "url": "https://decoder.lior-ai.com",
-  "description": "כלי חינמי שמסביר מסמכים רשמיים בעברית פשוטה — מכתבים מהבנק, הביטוח, המדינה, העירייה ומקומות נוספים.",
+  "description": "פענוח מסמכים בעברית בחינם — AI לקריאת מסמכים שמסביר PDF, תמונה או מכתב רשמי בשפה פשוטה. ניתוח PDF בעברית מקורית, בלי הרשמה ובלי הגבלה.",
   "applicationCategory": "UtilitiesApplication",
+  "applicationSubCategory": "DocumentAnalysis",
   "operatingSystem": "Web",
+  "browserRequirements": "Requires JavaScript. Requires HTML5.",
   "offers": {"@type": "Offer", "price": "0", "priceCurrency": "ILS"},
   "author": {"@type": "Organization", "name": "lior_Ai", "url": "https://lior-ai.com"},
+  "publisher": {"@type": "Organization", "name": "lior_Ai", "url": "https://lior-ai.com"},
   "inLanguage": "he",
-  "isAccessibleForFree": true
+  "isAccessibleForFree": true,
+  "featureList": [
+    "פענוח מסמכים בעברית",
+    "AI לקריאת מסמכים",
+    "ניתוח PDF בעברית",
+    "OCR עברית מקורית",
+    "הסבר מסמכים רשמיים בשפה פשוטה",
+    "ללא הרשמה וללא הגבלה",
+    "חלופה ל-chatpdf בעברית"
+  ],
+  "keywords": "פענוח מסמכים, AI לקריאת מסמכים, ניתוח PDF בעברית, chatpdf בעברית, הסבר מסמך רשמי, OCR עברית"
 }
 </script>
 
@@ -599,6 +612,40 @@
   .how-step h3{font-size:1.05em;font-weight:800;color:var(--ink);margin-bottom:4px}
   .how-step p{font-size:.92em;color:var(--ink-soft);line-height:1.5}
 
+  /* WHY US — competitive comparison */
+  .why-us{
+    margin:32px 0;padding:28px 24px;
+    background:linear-gradient(135deg,var(--blue-soft),var(--paper));
+    border-radius:var(--r);
+    border:1px solid var(--line);box-shadow:var(--shadow);
+  }
+  .why-us-title{
+    font-size:1.25em;font-weight:800;
+    color:var(--ink);margin-bottom:6px;text-align:center;
+  }
+  .why-us-sub{
+    font-size:.95em;color:var(--ink-soft);text-align:center;
+    margin-bottom:20px;line-height:1.5;
+  }
+  .why-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:14px;list-style:none;padding:0;margin:0;
+  }
+  .why-item{
+    display:flex;align-items:flex-start;gap:12px;
+    background:var(--paper);padding:16px 18px;
+    border-radius:var(--r-sm);border:1px solid var(--line);
+  }
+  .why-check{
+    flex:0 0 auto;width:28px;height:28px;border-radius:50%;
+    background:var(--green-soft);color:var(--green-deep);
+    display:inline-flex;align-items:center;justify-content:center;
+    font-weight:900;font-size:1em;
+  }
+  .why-text{font-size:1em;color:var(--ink);font-weight:600;line-height:1.4}
+  .why-text small{display:block;font-weight:400;color:var(--ink-soft);font-size:.85em;margin-top:2px}
+
   /* DISCLAIMER */
   .disclaimer-card{
     margin-top:28px;padding:18px 22px;
@@ -794,6 +841,30 @@
             <p>בעברית פשוטה — מה לעשות ומתי</p>
           </div>
         </div>
+      </section>
+
+      <!-- WHY US — competitive comparison -->
+      <section class="why-us" id="whyUs" aria-labelledby="whyUsTitle">
+        <h2 class="why-us-title" id="whyUsTitle">למה מפענח מסמכים של lior_Ai?</h2>
+        <p class="why-us-sub">חיפשת chatpdf בעברית או כלי לניתוח PDF בעברית? הנה למה אנחנו הבחירה הטובה יותר</p>
+        <ul class="why-list">
+          <li class="why-item">
+            <span class="why-check" aria-hidden="true">✓</span>
+            <span class="why-text">חינם לחלוטין<small>בלי הגבלה — תשתמש כמה שתרצה</small></span>
+          </li>
+          <li class="why-item">
+            <span class="why-check" aria-hidden="true">✓</span>
+            <span class="why-text">עובד בעברית מקורית<small>לא תרגום — מבין ניסוחים ישראליים</small></span>
+          </li>
+          <li class="why-item">
+            <span class="why-check" aria-hidden="true">✓</span>
+            <span class="why-text">מסביר בשפה פשוטה<small>בלי ז'רגון משפטי או בנקאי</small></span>
+          </li>
+          <li class="why-item">
+            <span class="why-check" aria-hidden="true">✓</span>
+            <span class="why-text">לא צריך הרשמה<small>בלי חשבון, בלי מייל, בלי מעקב</small></span>
+          </li>
+        </ul>
       </section>
 
       <!-- DISCLAIMER -->
