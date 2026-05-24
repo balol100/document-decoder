@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FAF6EE"/>
+      <stop offset="100%" stop-color="#F5EBD7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Document with magnifying glass icon -->
+  <g transform="translate(120,165)">
+    <rect x="0" y="0" width="180" height="240" rx="14" fill="#FFFFFF" stroke="#5B7FB8" stroke-width="6"/>
+    <line x1="28" y1="56" x2="152" y2="56" stroke="#5B7FB8" stroke-width="6" stroke-linecap="round"/>
+    <line x1="28" y1="100" x2="152" y2="100" stroke="#5B7FB8" stroke-width="6" stroke-linecap="round"/>
+    <line x1="28" y1="144" x2="120" y2="144" stroke="#5B7FB8" stroke-width="6" stroke-linecap="round"/>
+    <line x1="28" y1="188" x2="100" y2="188" stroke="#5B7FB8" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="170" cy="200" r="56" fill="#FFFFFF" stroke="#E8956B" stroke-width="10"/>
+    <line x1="210" y1="240" x2="252" y2="282" stroke="#E8956B" stroke-width="14" stroke-linecap="round"/>
+  </g>
+
+  <!-- Title (Hebrew, RTL) -->
+  <text x="1080" y="240" text-anchor="end"
+        font-family="Heebo, Arial, sans-serif" font-size="84" font-weight="900" fill="#2C3E50">
+    מפענח מסמכים
+  </text>
+  <text x="1080" y="330" text-anchor="end"
+        font-family="Heebo, Arial, sans-serif" font-size="40" font-weight="500" fill="#5C6B7A">
+    הסבר פשוט בעברית למסמכים רשמיים
+  </text>
+
+  <!-- Tagline pill -->
+  <g transform="translate(720,400)">
+    <rect x="0" y="0" width="360" height="64" rx="32" fill="#E8EFF9" stroke="#5B7FB8" stroke-width="3"/>
+    <text x="180" y="44" text-anchor="middle"
+          font-family="Heebo, Arial, sans-serif" font-size="30" font-weight="700" fill="#3D5A8A">
+      חינם · ללא הרשמה
+    </text>
+  </g>
+
+  <!-- Footer -->
+  <text x="1080" y="560" text-anchor="end"
+        font-family="Heebo, Arial, sans-serif" font-size="26" font-weight="500" fill="#8A98A8">
+    decoder.lior-ai.com
+  </text>
+</svg>
