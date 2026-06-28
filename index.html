@@ -759,6 +759,61 @@
   }
   .a11y-declaration a{color:var(--blue);text-decoration:none}
 
+  /* Social share floating FAB (bottom-left, stacked above WhatsApp button) */
+  .share-fab{
+    position:fixed;bottom:96px;left:22px;z-index:100;
+  }
+  .share-toggle{
+    width:62px;height:62px;border-radius:50%;
+    background:linear-gradient(135deg,var(--blue),var(--blue-deep));
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    cursor:pointer;border:none;position:relative;
+    box-shadow:0 10px 28px rgba(60,80,110,.32);
+    transition:transform .25s;
+  }
+  .share-toggle:hover{transform:scale(1.08)}
+  .share-fab.open .share-toggle{transform:rotate(45deg)}
+  .share-fab.open .share-toggle:hover{transform:rotate(45deg) scale(1.08)}
+  .share-items{
+    position:absolute;left:7px;bottom:74px;
+    display:flex;flex-direction:column-reverse;align-items:center;gap:12px;
+  }
+  .share-item{
+    width:48px;height:48px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;text-decoration:none;border:none;cursor:pointer;
+    box-shadow:0 6px 18px rgba(60,80,110,.28);
+    opacity:0;transform:translateY(14px) scale(.5);
+    pointer-events:none;
+    transition:opacity .22s ease,transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .2s;
+  }
+  .share-item:hover{box-shadow:0 9px 24px rgba(60,80,110,.4)}
+  .share-fab.open .share-item{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  .share-fab.open .share-item:nth-child(1){transition-delay:.04s}
+  .share-fab.open .share-item:nth-child(2){transition-delay:.08s}
+  .share-fab.open .share-item:nth-child(3){transition-delay:.12s}
+  .share-fab.open .share-item:nth-child(4){transition-delay:.16s}
+  .share-fab.open .share-item:nth-child(5){transition-delay:.20s}
+  .si-wa{background:linear-gradient(135deg,#25D366,#128C7E)}
+  .si-fb{background:linear-gradient(135deg,#1877F2,#0C5BD1)}
+  .si-x{background:linear-gradient(135deg,#2B2B2B,#000)}
+  .si-tg{background:linear-gradient(135deg,#2AABEE,#1C8FCB)}
+  .si-copy{background:linear-gradient(135deg,#7C8AA0,#5C6B7A)}
+  .si-copy.copied{background:linear-gradient(135deg,var(--green),var(--green-deep))}
+  /* "הועתק!" confirmation bubble */
+  .share-copied{
+    position:absolute;left:calc(100% + 14px);top:50%;transform:translateY(-50%) scale(.8);
+    background:var(--green-deep);color:#fff;font-weight:800;font-size:.85em;
+    padding:7px 14px;border-radius:10px;white-space:nowrap;
+    box-shadow:0 6px 18px rgba(63,110,69,.35);
+    opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;
+  }
+  .share-copied::before{
+    content:'';position:absolute;right:100%;top:50%;transform:translateY(-50%);
+    border:6px solid transparent;border-right-color:var(--green-deep);
+  }
+  .share-fab.show-copied .share-copied{opacity:1;transform:translateY(-50%) scale(1)}
+
   /* Responsive */
   @media(max-width:520px){
     body{padding:14px 12px 100px;font-size:17px}
@@ -777,6 +832,10 @@
     h1{font-size:1.7em}
     .wa-float,.a11y-btn{width:54px;height:54px;font-size:26px}
     .a11y-panel{bottom:84px;right:14px}
+    .share-fab{bottom:84px;left:14px}
+    .share-toggle{width:54px;height:54px}
+    .share-items{left:5px;bottom:66px}
+    .share-item{width:44px;height:44px}
   }
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none !important;transition:none !important}
@@ -965,6 +1024,45 @@
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/>
     </svg>
   </a>
+
+  <!-- Social share floating FAB -->
+  <div class="share-fab" id="shareFab" dir="rtl">
+    <div class="share-items" id="shareItems">
+      <a class="share-item si-wa" id="shareWa" href="#" target="_blank" rel="noopener noreferrer" aria-label="שתף בוואטסאפ">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="#fff" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/>
+        </svg>
+      </a>
+      <a class="share-item si-fb" id="shareFb" href="#" target="_blank" rel="noopener noreferrer" aria-label="שתף בפייסבוק">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="#fff" aria-hidden="true">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+      </a>
+      <a class="share-item si-x" id="shareX" href="#" target="_blank" rel="noopener noreferrer" aria-label="שתף באקס (טוויטר)">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff" aria-hidden="true">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      </a>
+      <a class="share-item si-tg" id="shareTg" href="#" target="_blank" rel="noopener noreferrer" aria-label="שתף בטלגרם">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="#fff" aria-hidden="true">
+          <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+        </svg>
+      </a>
+      <button class="share-item si-copy" id="shareCopy" type="button" aria-label="העתק קישור">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
+      </button>
+    </div>
+    <button class="share-toggle" id="shareToggle" type="button" aria-label="שיתוף הכלי" aria-expanded="false" aria-haspopup="true" aria-controls="shareItems">
+      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+      </svg>
+      <span class="share-copied" id="shareCopied" role="status" aria-live="polite">הועתק!</span>
+    </button>
+  </div>
 
   <!-- Accessibility button + panel -->
   <button class="a11y-btn" onclick="toggleA11y()" aria-label="הגדרות נגישות" aria-expanded="false" id="a11yBtn">
@@ -1571,6 +1669,76 @@ privacyModal.addEventListener('click', e=>{
 document.addEventListener('keydown', e=>{
   if(e.key === 'Escape' && privacyModal.classList.contains('show')) closePrivacy();
 });
+
+// ============================================================
+//  SOCIAL SHARE FAB
+// ============================================================
+(function initShareFab(){
+  const fab = $('shareFab');
+  const toggle = $('shareToggle');
+  const copyBtn = $('shareCopy');
+  const copiedEl = $('shareCopied');
+  if(!fab || !toggle) return;
+
+  const SHARE_URL = 'https://decoder.lior-ai.com';
+  const SHARE_TEXT = 'פענוח מסמכים עם AI — העלה מסמך וקבל הסבר בעברית פשוטה | decoder.lior-ai.com';
+  const t = encodeURIComponent(SHARE_TEXT);
+  const u = encodeURIComponent(SHARE_URL);
+
+  $('shareWa').href = `https://wa.me/?text=${t}`;
+  $('shareFb').href = `https://www.facebook.com/sharer/sharer.php?u=${u}`;
+  $('shareX').href  = `https://twitter.com/intent/tweet?text=${t}`;
+  $('shareTg').href = `https://t.me/share/url?url=${u}&text=${encodeURIComponent('פענוח מסמכים עם AI — העלה מסמך וקבל הסבר בעברית פשוטה')}`;
+
+  function openFab(){ fab.classList.add('open'); toggle.setAttribute('aria-expanded','true'); }
+  function closeFab(){ fab.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
+
+  toggle.addEventListener('click', e=>{
+    e.stopPropagation();
+    fab.classList.contains('open') ? closeFab() : openFab();
+  });
+
+  // Close when a share link is chosen
+  fab.querySelectorAll('.share-item[href]').forEach(a=>{
+    a.addEventListener('click', ()=> setTimeout(closeFab, 150));
+  });
+
+  // Copy link with "הועתק!" confirmation
+  let copiedTimer = null;
+  copyBtn.addEventListener('click', async ()=>{
+    try{
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        await navigator.clipboard.writeText(SHARE_URL);
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = SHARE_URL; ta.style.position='fixed'; ta.style.opacity='0';
+        document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta);
+      }
+      copyBtn.classList.add('copied');
+      fab.classList.add('show-copied');
+      copiedEl.textContent = 'הועתק!';
+      clearTimeout(copiedTimer);
+      copiedTimer = setTimeout(()=>{
+        fab.classList.remove('show-copied');
+        copyBtn.classList.remove('copied');
+      }, 1800);
+    } catch(err){
+      copiedEl.textContent = 'שגיאה בהעתקה';
+      fab.classList.add('show-copied');
+      clearTimeout(copiedTimer);
+      copiedTimer = setTimeout(()=> fab.classList.remove('show-copied'), 1800);
+    }
+  });
+
+  // Close on outside click / Escape
+  document.addEventListener('click', e=>{
+    if(fab.classList.contains('open') && !fab.contains(e.target)) closeFab();
+  });
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'Escape' && fab.classList.contains('open')) closeFab();
+  });
+})();
 
 // init
 refreshQuota();
